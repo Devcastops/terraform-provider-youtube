@@ -1,3 +1,5 @@
-provider "scaffolding" {
-  # example configuration here
+provider "youtube" {
+  provider "youtube" {
+  access_token = ""
+}
 }
