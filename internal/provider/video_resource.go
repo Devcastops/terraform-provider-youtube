@@ -1,6 +1,3 @@
-// Copyright (c) HashiCorp, Inc.
-// SPDX-License-Identifier: MPL-2.0
-
 package provider
 
 import (
@@ -135,7 +132,6 @@ func (d *VideoResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 // Delete implements resource.Resource.
 func (d *VideoResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	return
 }
 
 // Update implements resource.Resource.
