@@ -23,12 +23,12 @@ func NewVideoResource() resource.Resource {
 	return &VideoResource{}
 }
 
-// VideoResource defines the data source implementation.
+// VideoResource defines the resource implementation.
 type VideoResource struct {
 	client *youtube.Service
 }
 
-// VideoResourceModel describes the data source data model.
+// VideoResourceModel describes the resource data model.
 type VideoResourceModel struct {
 	Id          types.String `tfsdk:"id"`
 	Res         types.String `tfsdk:"res"`
@@ -43,7 +43,7 @@ func (d *VideoResource) Metadata(ctx context.Context, req resource.MetadataReque
 func (d *VideoResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language video.
-		MarkdownDescription: "Video data source",
+		MarkdownDescription: "Video resource",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -119,7 +119,7 @@ func (d *VideoResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	data.Description = types.StringValue(response.Items[0].Snippet.Description)
 	// Write logs using the tflog package
 	// Documentation: https://terraform.io/plugin/log
-	tflog.Trace(ctx, "read a data source")
+	tflog.Trace(ctx, "read a resource")
 
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
