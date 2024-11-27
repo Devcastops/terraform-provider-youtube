@@ -1,5 +1,5 @@
 provider "youtube" {
   provider "youtube" {
-  access_token = ""
-}
+    access_token = ""
+  }
 }

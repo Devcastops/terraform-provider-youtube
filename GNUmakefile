@@ -21,4 +21,8 @@ test:
 testacc:
 	TF_ACC=1 go test -v -cover -timeout 120m ./...
 
+run:
+	go install .
+	TF_CLI_CONFIG_FILE=$(shell pwd)/dev.tfrc terraform -chdir=tests apply
+
 .PHONY: fmt lint test testacc build install generate
