@@ -28,10 +28,19 @@ type VideoDataSource struct {
 
 // VideoDataSourceModel describes the data source data model.
 type VideoDataSourceModel struct {
-	Id          types.String `tfsdk:"id"`
-	Res         types.String `tfsdk:"res"`
-	Title       types.String `tfsdk:"title"`
-	Description types.String `tfsdk:"description"`
+	Id                   types.String `tfsdk:"id"`
+	Res                  types.String `tfsdk:"res"`
+	Title                types.String `tfsdk:"title"`
+	Description          types.String `tfsdk:"description"`
+	ContentDetails       types.String `tfsdk:"content_details"`
+	LiveStreamingDetails types.String `tfsdk:"live_streaming_details"`
+	Localizations        types.String `tfsdk:"localizations"`
+	Player               types.String `tfsdk:"player"`
+	RecordingDetails     types.String `tfsdk:"recording_details"`
+	Snippet              types.String `tfsdk:"snippet"`
+	Statistics           types.String `tfsdk:"statistics"`
+	Status               types.String `tfsdk:"status"`
+	TopicDetails         types.String `tfsdk:"topic_details"`
 }
 
 func (d *VideoDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -57,6 +66,42 @@ func (d *VideoDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				Computed:            true,
 			},
 			"res": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"content_details": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"live_streaming_details": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"localizations": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"player": schema.StringAttribute{
+				MarkdownDescription: "youtube player embed  information",
+				Computed:            true,
+			},
+			"recording_details": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"snippet": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"statistics": schema.StringAttribute{
+				MarkdownDescription: "status for the video ",
+				Computed:            true,
+			},
+			"status": schema.StringAttribute{
+				MarkdownDescription: "test for what gets returned",
+				Computed:            true,
+			},
+			"topic_details": schema.StringAttribute{
 				MarkdownDescription: "test for what gets returned",
 				Computed:            true,
 			},
@@ -95,7 +140,21 @@ func (d *VideoDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 	call := d.client.Videos.List([]string{
-		"snippet"}).Id(data.Id.ValueString())
+		"contentDetails",
+		// "fileDetails",
+		"id",
+		"liveStreamingDetails",
+		"localizations",
+		// "paidProductPlacementDetails",
+		"player",
+		// "processingDetails",
+		"recordingDetails",
+		"snippet",
+		"statistics",
+		"status",
+		// "suggestions",
+		"topicDetails",
+	}).Id(data.Id.ValueString())
 
 	response, err := call.Do()
 	if err != nil {
@@ -112,7 +171,16 @@ func (d *VideoDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		)
 		return
 	}
-	data.Res = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Snippet))
+	data.Res = types.StringValue(fmt.Sprintf("%+v", response.Items[0]))
+	data.ContentDetails = types.StringValue(fmt.Sprintf("%+v", response.Items[0].ContentDetails))
+	data.LiveStreamingDetails = types.StringValue(fmt.Sprintf("%+v", response.Items[0].LiveStreamingDetails))
+	data.Localizations = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Localizations))
+	data.Player = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Player))
+	data.RecordingDetails = types.StringValue(fmt.Sprintf("%+v", response.Items[0].RecordingDetails))
+	data.Snippet = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Snippet))
+	data.Statistics = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Statistics))
+	data.Status = types.StringValue(fmt.Sprintf("%+v", response.Items[0].Status))
+	data.TopicDetails = types.StringValue(fmt.Sprintf("%+v", response.Items[0].TopicDetails))
 	data.Title = types.StringValue(response.Items[0].Snippet.Title)
 	data.Description = types.StringValue(response.Items[0].Snippet.Description)
 	// Write logs using the tflog package

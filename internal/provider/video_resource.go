@@ -97,7 +97,21 @@ func (d *VideoResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 	call := d.client.Videos.List([]string{
-		"snippet"}).Id(data.Id.ValueString())
+		"contentDetails",
+		// "fileDetails",
+		"id",
+		"liveStreamingDetails",
+		"localizations",
+		// "paidProductPlacementDetails",
+		"player",
+		// "processingDetails",
+		"recordingDetails",
+		"snippet",
+		"statistics",
+		"status",
+		// "suggestions",
+		"topicDetails",
+	}).Id(data.Id.ValueString())
 
 	response, err := call.Do()
 	if err != nil {
@@ -149,7 +163,21 @@ func (d *VideoResource) Update(ctx context.Context, req resource.UpdateRequest, 
 	}
 
 	call := d.client.Videos.List([]string{
-		"snippet"}).Id(data.Id.ValueString())
+		"contentDetails",
+		// "fileDetails",
+		"id",
+		"liveStreamingDetails",
+		"localizations",
+		// "paidProductPlacementDetails",
+		"player",
+		// "processingDetails",
+		"recordingDetails",
+		"snippet",
+		"statistics",
+		"status",
+		// "suggestions",
+		"topicDetails",
+	}).Id(data.Id.ValueString())
 
 	response, err := call.Do()
 	if err != nil {
